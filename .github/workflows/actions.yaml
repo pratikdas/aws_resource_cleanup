@@ -1,0 +1,31 @@
+name: GitHub Actions Infra
+run-name: ${{ github.actor }} is provisioing infra 🚀
+on: 
+ push:
+   branches:
+   - main
+jobs:
+  setup_servers:
+    runs-on: ubuntu-latest   
+    permissions:
+            id-token: write
+            contents: read
+    steps:
+      - name: Checkout the infra repository
+        uses: actions/checkout@v2
+      - name: Install Prerequisites
+        run: |
+          sudo apt-get update
+          pip install aws-nuke
+        shell: bash  
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::489455091964:role/GitHubAction-AssumeRoleWithAction
+          role-session-name: MySessionName   
+        
+      - name: dry run aws-nuke
+        run:
+          aws-nuke
+        shell: bash  
