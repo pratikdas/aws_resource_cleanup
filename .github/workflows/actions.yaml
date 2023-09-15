@@ -16,7 +16,7 @@ jobs:
       - name: Install Prerequisites
         run: |
           sudo apt-get update
-          pip install aws-nuke
+          pip -V
         shell: bash  
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
