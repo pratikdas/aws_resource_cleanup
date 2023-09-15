@@ -17,6 +17,10 @@ jobs:
         run: |
           sudo apt-get update
           pip -V
+          wget https://github.com/rebuy-de/aws-nuke/releases/download/v2.25.0/aws-nuke-v2.25.0-linux-amd64.tar.gz
+          tar -xvf aws-nuke-v2.25.0-linux-amd64.tar.gz
+          sudo mv aws-nuke-v2.25.0-linux-amd64 /usr/local/bin/aws-nuke
+          ls -ltr /usr/local/bin/aws-nuke
         shell: bash  
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -27,5 +31,5 @@ jobs:
         
       - name: dry run aws-nuke
         run:
-          aws-nuke
+          aws-nuke -c config/nuke-config.yml
         shell: bash  
